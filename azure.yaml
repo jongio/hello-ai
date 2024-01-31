@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: hello-ai
+metadata:
+  template: hello-ai@0.0.1-beta
+services:
+  api:
+    project: ./src/api
+    language: python
+    host: aks
+    k8s:
+      deploymentPath: ../../infra/api
+infra:
+  provider: terraform
