@@ -26,7 +26,7 @@ output "AZURE_OPENAI_MODEL_NAME" {
 }
 
 output "AZURE_OPENAI_MODEL_VERSION" {
-  value = "0914"
+  value = "0613"
 }
 
 output "AZURE_OPENAI_NAME" {
@@ -46,11 +46,11 @@ output "AZURE_AKS_NAMESPACE" {
 }
 
 output "AZURE_CONTAINER_REGISTRY_ENDPOINT" {
-  value = azurerm_container_registry.acr[0].login_server
+  value = local.is_default_workspace ? "" : azurerm_container_registry.acr[0].login_server
 }
 
 output "AZURE_CONTAINER_REGISTRY_NAME" {
-  value = azurerm_container_registry.acr[0].name
+  value = local.is_default_workspace ? "" : azurerm_container_registry.acr[0].name
 }
 
 output "AZURE_LOCATION" {

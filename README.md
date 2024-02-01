@@ -17,7 +17,7 @@
       - Go back to other terminal where you ran `az login`
       - It should show you your subscriptions.
    1. AZ login from within **Codespaces in VS Code**
-      - Run `az login --scope https://graph.microsoft.com/.default --use-device-code`
+      - Run `az login --scope https://graph.microsoft.com/.default`
 1. Run `az account set -n {sub}` to set right subscription.
 
 #### Provision

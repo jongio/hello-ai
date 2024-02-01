@@ -28,7 +28,7 @@ variable "openai_model_name" {
 variable "openai_model_version" {
   description = "value of azure openai model version"
   type        = string
-  default     = "0914"
+  default     = "0613"
 }
 
 variable "openai_model_capacity" {
