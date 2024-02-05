@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Debug API",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "module": "uvicorn",
             "cwd": "${workspaceFolder}/src/api",
