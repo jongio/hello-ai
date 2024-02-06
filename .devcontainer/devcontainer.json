@@ -1,8 +1,12 @@
 {
-	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"IMAGE": "python:3.10-bullseye"
+		}
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/terraform:1": {},
-		"ghcr.io/azure/azure-dev/azd:latest": {},
 		"ghcr.io/devcontainers/features/azure-cli:1": {},
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
 		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
@@ -20,7 +24,8 @@
 				"ms-azuretools.vscode-bicep",
 				"ms-azuretools.vscode-docker",
 				"ms-kubernetes-tools.vscode-aks-tools",
-				"ms-kubernetes-tools.vscode-kubernetes-tools"
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"hashicorp.terraform"
 			]
 		}
 	},
