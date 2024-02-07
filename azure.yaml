@@ -16,10 +16,10 @@ hooks:
     continueOnError: false
     interactive: true
     run: infra/hooks/preprovision.sh
-  postup:
+  postdeploy:
     shell: sh
     continueOnError: false
     interactive: true
-    run: infra/hooks/postup.sh
+    run: infra/hooks/postdeploy.sh
 infra:
   provider: terraform
