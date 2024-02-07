@@ -1,5 +1,4 @@
 terraform {
-  backend "azurerm" {}
   required_version = ">= 1.1.7, < 2.0.0"
   required_providers {
     azurerm = {
@@ -14,7 +13,6 @@ terraform {
       source  = "hashicorp/local"
       version = "=2.4.0"
     }
-
     random = {
       source  = "hashicorp/random"
       version = "=3.5.1"
@@ -24,14 +22,8 @@ terraform {
 
 provider "azurerm" {
   features {
-    key_vault {
-      purge_soft_delete_on_destroy = false
-    }
     resource_group {
       prevent_deletion_if_contains_resources = false
-    }
-    cognitive_account {
-      purge_soft_delete_on_destroy = true
     }
   }
 }
