@@ -10,5 +10,16 @@ services:
     host: aks
     k8s:
       deploymentPath: ../../infra/api
+hooks:
+  preprovision:
+    shell: sh
+    continueOnError: false
+    interactive: true
+    run: infra/hooks/preprovision.sh
+  postup:
+    shell: sh
+    continueOnError: false
+    interactive: true
+    run: infra/hooks/postup.sh
 infra:
   provider: terraform
