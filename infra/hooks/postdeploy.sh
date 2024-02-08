@@ -35,8 +35,8 @@ if [ "$WORKSPACE" = "azure" ]; then
     echo "======================================================"
     echo " Website IP Address                 "
     echo "======================================================"
-    API_IP=$(kubectl get svc api -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    echo "API IP: http://$API_IP"
+    WEB_IP=$(kubectl get ingress ingress-web -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    echo "WEB IP: http://$WEB_IP"
 fi
 
 azd env get-values > .env
