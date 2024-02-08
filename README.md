@@ -23,7 +23,7 @@
 
 #### Run Locally
 1. Hit F5
-1. Go to https://localhost:3100 and view the quote
+1. Go to http://localhost:3000 and view the application
 
 ### Provision all resources to Azure
 

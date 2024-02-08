@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /code
 
 # Expose the port the app runs on
-EXPOSE 3100
+EXPOSE 3000
 
 # Copy only the requirements file, to cache the pip install step
 COPY ./requirements.txt /code/
@@ -16,5 +16,11 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 # Copy the rest of the application code
 COPY ./quote /code/quote
 
+# Set environment variables
+# Flask runs in production mode by default. Use development if you need debug features.
+ENV FLASK_APP=quote/app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=3000
+
 # Command to run the application
-CMD ["uvicorn", "quote.app:app", "--host", "0.0.0.0", "--port", "3100", "--proxy-headers"]
+CMD ["flask", "run"]

@@ -24,7 +24,7 @@ async def random_quote():
             messages=[
                 {
                     "role": "user",
-                    "content": "Generate a random inspirational quote that Satya Nadella would say",
+                    "content": "Generate a random inspirational quote from a random star wars character and attribute them",
                 },
             ],
         )

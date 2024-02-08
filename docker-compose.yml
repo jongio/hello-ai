@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ./src/api
+    ports:
+      - "3100:3100"
+    env_file: 
+      - .env
+  web:
+    build:
+      context: ./src/web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api

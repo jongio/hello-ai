@@ -9,7 +9,13 @@ services:
     language: python
     host: aks
     k8s:
-      deploymentPath: ../../infra/api
+      deploymentPath: ../../infra/manifests/api
+  web:
+    project: ./src/web
+    language: python
+    host: aks
+    k8s:
+      deploymentPath: ../../infra/manifests/web
 hooks:
   preprovision:
     shell: sh

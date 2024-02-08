@@ -34,4 +34,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
       microsoft_defender
     ]
   }
+
+  web_app_routing {
+    dns_zone_id = ""
+  }
 }
