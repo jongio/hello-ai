@@ -29,7 +29,7 @@
 
 1. Run `azd env set WORKSPACE azure`
 1. Run `azd up`. This will provision all Azure resources (AKS, Service Bus, etc)
-1. Open API IP, which will be outputted to the terminal.
+1. Open WEB IP, which will be outputted to the terminal.
 
 ### Setup GitHub Action
 
