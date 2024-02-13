@@ -1,7 +1,8 @@
 import os
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
+from pydantic import BaseModel
 
 load_dotenv()
 
@@ -16,7 +17,7 @@ client = AzureOpenAI(
 app = FastAPI()
 
 # Endpoint to generate a random quote
-@app.get("/")
+@app.get("/quote")
 async def random_quote():
     try:
         completion = client.chat.completions.create(
@@ -31,3 +32,21 @@ async def random_quote():
         return {"quote": completion.choices[0].message.content}
     except Exception as e:
         return {"error": str(e)}
+
+# Define a Pydantic model for the chat request body
+class ChatRequest(BaseModel):
+    message: str
+
+# Endpoint for chat
+@app.post("/chat")
+async def chat(request: ChatRequest):
+    try:
+        completion = client.chat.completions.create(
+            model=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
+            messages=[
+                {"role": "user", "content": request.message},
+            ],
+        )
+        return {"response": completion.choices[0].message.content}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

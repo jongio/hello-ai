@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card text-center">
+        <div class="card-header">Star Wars Quote Generator</div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p id="quote">Click the button below to fetch a quote.</p>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          <button class="btn btn-primary" id="fetch-quote">New Quote</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/index.js"></script>
+
+{% endblock %}

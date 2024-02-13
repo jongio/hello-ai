@@ -14,7 +14,7 @@ COPY ./requirements.txt /code/
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy the rest of the application code
-COPY ./quote /code/quote
+COPY ./api /code/api
 
 # Command to run the application
-CMD ["uvicorn", "quote.app:app", "--host", "0.0.0.0", "--port", "3100", "--proxy-headers"]
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "3100", "--proxy-headers"]

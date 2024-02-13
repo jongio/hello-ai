@@ -1,0 +1,48 @@
+/* Adjustments to the chat page and container */
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 56px); /* Adjust based on your navbar height */
+  max-width: 600px; /* Control the max width of the chat area */
+  margin: 0 auto; /* Center the chat area horizontally */
+  padding: 15px;
+}
+
+.chat-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  background-color: #f8f9fa;
+}
+
+/* Styling for chat bubbles */
+.chat-bubble {
+  padding: 10px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.user {
+  background-color: #d1e7ff;
+}
+
+.ai {
+  background-color: #f0f0f0;
+}
+
+/* Flexbox for aligning icons with text */
+.d-flex {
+  display: flex;
+  align-items: flex-start; /* Align items to the start of the flex container */
+}
+
+/* Adjust icon position within .d-flex containers */
+.d-flex > i {
+  padding-top: 10px; /* Move icon down by 10px */
+}
+
+.me-2 {
+  margin-right: 0.5rem;
+}
