@@ -168,3 +168,4 @@ kustomize
 *.tfstate
 *.tfstate.backup
 *_env
+*.data

@@ -37,6 +37,24 @@ variable "openai_model_capacity" {
   default     = 120
 }
 
+variable "openai_embeddings_model_name" {
+  description = "value of azure openai embeddings model name"
+  type        = string
+  default     = "text-embedding-ada-002"
+}
+
+variable "openai_embeddings_model_version" {
+  description = "value of azure openai embeddings model version"
+  type        = string
+  default     = "2"
+}
+
+variable "openai_embeddings_model_capacity" {
+  description = "value of azure openai embeddings model capacity"
+  type        = number
+  default     = 120
+}
+
 variable "k8s_namespace" {
   description = "value of kubernetes namespace"
   type        = string

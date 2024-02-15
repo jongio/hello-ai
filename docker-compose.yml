@@ -5,8 +5,15 @@ services:
       context: ./src/api
     ports:
       - "3100:3100"
+      - "5678:5678"  # debugpy port
     env_file: 
       - .env
+    command: /bin/sh -c "[ '${DEBUG_MODE:-0}' = '1' ] && exec python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m uvicorn api.app:app --host 0.0.0.0 --port 3100 --proxy-headers || exec uvicorn api.app:app --host 0.0.0.0 --port 3100 --proxy-headers"
+    volumes:
+      - ./src/api:/code  # Ensure your API source code is synchronized with the container
+      - ./.data:/.data
+    environment:
+      - PYTHONUNBUFFERED=1
   web:
     build:
       context: ./src/web

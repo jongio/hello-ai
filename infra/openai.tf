@@ -31,6 +31,22 @@ resource "azurerm_cognitive_deployment" "deployment" {
   }
 }
 
+resource "azurerm_cognitive_deployment" "embeddings_deployment" {
+  name                 = var.openai_embeddings_model_name
+  cognitive_account_id = azurerm_cognitive_account.cog.id
+
+  model {
+    format  = "OpenAI"
+    name    = var.openai_embeddings_model_name
+    version = var.openai_embeddings_model_version
+  }
+
+  scale {
+    type     = "Standard"
+    capacity = var.openai_embeddings_model_capacity
+  }
+}
+
 resource "azurerm_user_assigned_identity" "uai" {
   location            = var.location
   name                = azurecaf_name.cog_name.result

@@ -13,12 +13,10 @@ output "AZURE_OPENAI_API_KEY" {
 
 output "AZURE_OPENAI_API_VERSION" {
   value     = "2023-07-01-preview"
-  sensitive = true
 }
 
 output "AZURE_OPENAI_DEPLOYMENT_NAME" {
   value     = "gpt-35-turbo"
-  sensitive = true
 }
 
 output "AZURE_OPENAI_MODEL_NAME" {
@@ -27,6 +25,18 @@ output "AZURE_OPENAI_MODEL_NAME" {
 
 output "AZURE_OPENAI_MODEL_VERSION" {
   value = "0613"
+}
+
+output "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME" {
+  value     = "text-embedding-ada-002"
+}
+
+output "AZURE_OPENAI_EMBEDDINGS_MODEL_NAME" {
+  value = var.openai_embeddings_model_name
+}
+
+output "AZURE_OPENAI_EMBEDDINGS_MODEL_VERSION" {
+  value = "2"
 }
 
 output "AZURE_OPENAI_NAME" {

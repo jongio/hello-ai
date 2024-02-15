@@ -1,8 +1,14 @@
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import os
 from fastapi import FastAPI, Request, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 from pydantic import BaseModel
+from langchain_community.vectorstores import Chroma
+from langchain_openai import AzureOpenAIEmbeddings
 
 load_dotenv()
 
@@ -37,15 +43,27 @@ async def random_quote():
 class ChatRequest(BaseModel):
     message: str
 
+
+system_prompt = "Using only the provided embeddings (E) from the vectordb, find the most relevant answer to the user question (Q). Do not use external knowledge. You will receive data in this format: 'E:{content}\nQ:{question}'"
+
 # Endpoint for chat
 @app.post("/chat")
 async def chat(request: ChatRequest):
     try:
+        embeddings = AzureOpenAIEmbeddings(
+            azure_deployment=os.getenv('AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME'),
+            openai_api_version=os.getenv('AZURE_OPENAI_API_VERSION'),
+        )
+        vectordb = Chroma(persist_directory="/.data", embedding_function=embeddings)
+        docs = vectordb.similarity_search(request.message, k=3)
+        user_prompt = f"E:{docs}\nQ:{request.message}"
         completion = client.chat.completions.create(
             model=os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME"),
             messages=[
-                {"role": "user", "content": request.message},
-            ],
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],           
+            temperature=0.0 
         )
         return {"response": completion.choices[0].message.content}
     except Exception as e:

@@ -1,0 +1,7 @@
+pypdf
+langchain-community 
+langchain==0.1.7
+langchain_openai
+python-dotenv==1.0.1
+chromadb==0.4.22
+pysqlite3-binary

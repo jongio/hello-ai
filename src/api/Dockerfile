@@ -16,5 +16,7 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 # Copy the rest of the application code
 COPY ./api /code/api
 
+RUN pip install debugpy
+
 # Command to run the application
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "3100", "--proxy-headers"]

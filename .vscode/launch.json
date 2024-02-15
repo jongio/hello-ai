@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Docker Compose Up",
+            "name": "Docker: Compose Up",
             "type": "node-terminal",
             "request": "launch",
             "command": "docker-compose up --build",
@@ -11,6 +11,42 @@
                 "reveal": "always",
                 "panel": "new"
             }
+        },
+        {
+            "name": "Docker: Compose Up (Debug)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "export DEBUG_MODE=1 && docker-compose up --build",
+            "cwd": "${workspaceFolder}",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "windows": {
+                "command": "cmd /C \"set DEBUG_MODE=1 && docker-compose up --build\""
+            },
+            "linux": {
+                "command": "export DEBUG_MODE=1 && docker-compose up --build"
+            },
+            "osx": {
+                "command": "export DEBUG_MODE=1 && docker-compose up --build"
+            }
+        },
+        {
+            "name": "Docker: Attach to API",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/src/api",
+                    "remoteRoot": "/code"
+                }
+            ],
+            "justMyCode": true
         }
     ]
 }
