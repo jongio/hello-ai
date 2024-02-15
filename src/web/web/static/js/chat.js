@@ -1,5 +1,6 @@
 $(document).ready(() => {
     let sendingRequest = false;
+    let controller = null;
 
     const scrollToBottom = () => {
         const chatContainer = $("#chat-container")[0];
@@ -24,27 +25,35 @@ $(document).ready(() => {
     const toggleSendButtonIcon = (sending) => {
         const sendButton = $("#send");
         if (sending) {
-            sendButton.html('<i class="bi bi-stop-fill"></i>'); // Change to stop icon
+            sendButton.html('<i class="bi bi-stop-circle"></i>'); // Change to stop icon
         } else {
             sendButton.html('<i class="bi bi-arrow-up"></i>'); // Change back to up arrow icon
         }
     };
 
     const sendMessageToAI = (userInput, searchDocuments) => {
+        controller = new AbortController(); // Create a new AbortController
+        const signal = controller.signal; // Get the signal from the controller
+
         fetch('/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: userInput, search_documents: searchDocuments }),
+            signal: signal, // Pass the signal to the fetch request
         })
             .then(response => response.json())
             .then(data => {
                 hideLoading();
-                appendMessage(data.response, false);
+                if (!signal.aborted) { // Check if the request was aborted
+                    appendMessage(data.response, false);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
                 hideLoading();
-                $("#chat-container").append(`<div class="text-danger">Error: Could not get a response from the AI.</div>`);
+                if (!signal.aborted) { // Check if the request was aborted
+                    $("#chat-container").append(`<div class="text-danger">Error: Could not get a response from the AI.</div>`);
+                }
             })
             .finally(() => {
                 sendingRequest = false;
@@ -70,7 +79,7 @@ $(document).ready(() => {
     $("#send").click(() => {
         if (sendingRequest) {
             // If already sending request, stop it
-            // You may need to implement a way to abort the fetch request here
+            controller.abort(); // Abort the ongoing request
             sendingRequest = false;
             toggleSendButtonIcon(false);
             hideLoading(); // Hide loading animation if visible
