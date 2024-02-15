@@ -2,9 +2,9 @@
 .chat-page {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 56px); /* Adjust based on your navbar height */
-  max-width: 600px; /* Control the max width of the chat area */
-  margin: 0 auto; /* Center the chat area horizontally */
+  height: calc(100vh - 56px);
+  max-width: 600px;
+  margin: 0 auto;
   padding: 15px;
 }
 
@@ -17,32 +17,87 @@
   background-color: #f8f9fa;
 }
 
-/* Styling for chat bubbles */
+/* Styling for chat bubbles to look like iMessage */
 .chat-bubble {
-  padding: 10px;
-  border-radius: 20px;
-  display: inline-block;
+  width: 80%; /* Take up 80% of the width */
+  padding: 8px 12px;
+  border-radius: 18px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  position: relative;
+  word-wrap: break-word;
 }
 
-.user {
-  background-color: #d1e7ff;
+/* Align user messages to the right */
+.user-message .chat-bubble {
+  background-color: #007bff; /* iMessage blue */
+  color: white;
+  border-bottom-right-radius: 5px;
 }
 
-.ai {
-  background-color: #f0f0f0;
+/* Align AI messages to the left */
+.ai-message .chat-bubble {
+  background-color: #e5e5ea; /* iMessage light gray */
+  color: black;
+  border-bottom-left-radius: 5px;
 }
 
-/* Flexbox for aligning icons with text */
+/* Flexbox for aligning bubbles */
 .d-flex {
   display: flex;
-  align-items: flex-start; /* Align items to the start of the flex container */
+  align-items: center; /* Center align items */
 }
 
-/* Adjust icon position within .d-flex containers */
-.d-flex > i {
-  padding-top: 10px; /* Move icon down by 10px */
+/* Adjust margin for spacing between bubble and icon */
+.message-row .bi {
+  margin: 0 8px;
 }
 
-.me-2 {
-  margin-right: 0.5rem;
+/* Input and button focus styles */
+.chat-input input:focus,
+.chat-input button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@keyframes loadingDots {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* iPhone like loading dots animation */
+.loading-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 2px;
+  background-color: #999; /* Gray color like iMessage */
+  border-radius: 50%;
+  animation: loadingDots 1.4s infinite ease-in-out both;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0;
+}
+
+/* Container for loading dots for centering in the chat */
+.loading-container {
+  display: flex;
+  justify-content: center; /* Center the loading dots */
+  padding: 10px;
 }

@@ -26,13 +26,11 @@ def make_api_request(endpoint, method="GET", data=None):
 
 @app.route('/')
 def home():
-    # Renders the Quotes page
-    return render_template('index.html', active_page="home")
+    return render_template('index.html', active_page="chat")
 
-@app.route('/chat')
+@app.route('/quotes')
 def chat_ui():
-    # Renders the Chat page
-    return render_template('chat.html', active_page="chat")
+    return render_template('quotes.html', active_page="quotes")
 
 @app.route('/quote', methods=['GET'])
 def quote():
@@ -40,8 +38,7 @@ def quote():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get('message')
-    return make_api_request("/chat", method="POST", data={"message": user_message})
+    return make_api_request("/chat", method="POST", data=request.json)
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

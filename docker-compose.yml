@@ -1,5 +1,16 @@
 version: "3.8"
 services:
+  load:
+    build: 
+      context: ./src/load
+    env_file: 
+      - .env
+    volumes:
+      - ./.data:/.data
+      - ./files:/files
+    environment:
+      - PYTHONUNBUFFERED=1
+      - FORCE_LOAD=${FORCE_LOAD:-false}  # Add this line
   api:
     build:
       context: ./src/api
@@ -10,8 +21,10 @@ services:
       - .env
     command: /bin/sh -c "[ '${DEBUG_MODE:-0}' = '1' ] && exec python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m uvicorn api.app:app --host 0.0.0.0 --port 3100 --proxy-headers || exec uvicorn api.app:app --host 0.0.0.0 --port 3100 --proxy-headers"
     volumes:
-      - ./src/api:/code  # Ensure your API source code is synchronized with the container
+      - ./src/api:/code
       - ./.data:/.data
+    depends_on:
+      - load
     environment:
       - PYTHONUNBUFFERED=1
   web:
