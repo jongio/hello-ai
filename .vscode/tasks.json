@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "openTerminal",
+        "type": "shell",
+        "command": "",
+        "windows": {
+          "command": "echo 'Opening terminal...'",
+          "presentation": {
+            "echo": false,
+            "reveal": "always",
+            "panel": "shared"
+          }
+        },
+        "linux": {
+          "command": "echo 'Opening terminal...'",
+          "presentation": {
+            "echo": false,
+            "reveal": "always",
+            "panel": "shared"
+          }
+        },
+        "osx": {
+          "command": "echo 'Opening terminal...'",
+          "presentation": {
+            "echo": false,
+            "reveal": "always",
+            "panel": "shared"
+          }
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
+  
