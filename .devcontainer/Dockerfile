@@ -1,6 +1,7 @@
 # Use a specific tag for the bullseye image to ensure reproducibility
-ARG IMAGE=bullseye
-FROM --platform=amd64 mcr.microsoft.com/devcontainers/${IMAGE}:latest
+ARG IMAGE=python
+ARG TAG=3.11-bookworm
+FROM --platform=amd64 mcr.microsoft.com/devcontainers/${IMAGE}:${TAG}
 
 # Combine RUN instructions to reduce layers and use cleanup in the same layer as install to reduce image size
 RUN export DEBIAN_FRONTEND=noninteractive && \

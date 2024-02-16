@@ -1,5 +1,5 @@
 # Use a specific, slim variant of the Python 3.10 image for smaller image size
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /code

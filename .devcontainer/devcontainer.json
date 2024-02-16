@@ -2,7 +2,8 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": {
-			"IMAGE": "python:3.10-bullseye"
+			"IMAGE": "python",
+			"TAG": "3.11-bookworm"
 		}
 	},
 	"features": {
