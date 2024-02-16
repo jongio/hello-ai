@@ -34,7 +34,7 @@ variable "openai_model_version" {
 variable "openai_model_capacity" {
   description = "value of azure openai model capacity"
   type        = number
-  default     = 120
+  default     = 30
 }
 
 variable "openai_embeddings_model_name" {
@@ -52,7 +52,7 @@ variable "openai_embeddings_model_version" {
 variable "openai_embeddings_model_capacity" {
   description = "value of azure openai embeddings model capacity"
   type        = number
-  default     = 120
+  default     = 30
 }
 
 variable "k8s_namespace" {

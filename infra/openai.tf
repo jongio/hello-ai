@@ -46,31 +46,3 @@ resource "azurerm_cognitive_deployment" "embeddings_deployment" {
     capacity = var.openai_embeddings_model_capacity
   }
 }
-
-resource "azurerm_user_assigned_identity" "uai" {
-  location            = var.location
-  name                = azurecaf_name.cog_name.result
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_federated_identity_credential" "fic" {
-  count               = local.is_default_workspace ? 0 : 1
-  name                = azurecaf_name.cog_name.result
-  resource_group_name = azurerm_resource_group.rg.name
-  parent_id           = azurerm_user_assigned_identity.uai.id
-  audience            = ["api://AzureADTokenExchange"]
-  issuer              = azurerm_kubernetes_cluster.aks[0].oidc_issuer_url
-  subject             = "system:serviceaccount:${var.k8s_namespace}:ai-service-account"
-}
-
-resource "azurerm_role_assignment" "role_me" {
-  principal_id         = data.azurerm_client_config.current.object_id
-  role_definition_name = "Cognitive Services OpenAI User"
-  scope                = azurerm_cognitive_account.cog.id
-}
-
-resource "azurerm_role_assignment" "role_mi" {
-  principal_id         = azurerm_user_assigned_identity.uai.principal_id
-  role_definition_name = "Cognitive Services OpenAI User"
-  scope                = azurerm_cognitive_account.cog.id
-}

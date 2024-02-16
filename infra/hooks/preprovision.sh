@@ -3,8 +3,8 @@
 # Convert WORKSPACE to lowercase and trim any whitespace
 WORKSPACE=$(echo "${WORKSPACE:-default}" | tr '[:upper:]' '[:lower:]' | xargs)
 
-# Continue with the rest of the script based on WORKSPACE value
-if [ "$WORKSPACE" = "default" ]; then
+# Continue with the rest of the script based on WORKSPACE value and FORCE_TERRAFORM_REMOTE_STATE_CREATION condition
+if [ "$WORKSPACE" = "default" ] && { [ -z "$FORCE_TERRAFORM_REMOTE_STATE_CREATION" ] || [ "$FORCE_TERRAFORM_REMOTE_STATE_CREATION" = "true" ]; }; then
     # Define the file path
     TF_DIR="infra/tfstate"
     
@@ -27,12 +27,14 @@ if [ "$WORKSPACE" = "default" ]; then
     RS_CONTAINER_NAME=$(terraform -chdir="$TF_DIR" output -raw RS_CONTAINER_NAME)
     RS_RESOURCE_GROUP=$(terraform -chdir="$TF_DIR" output -raw RS_RESOURCE_GROUP)
     
-    # Set the environment variables
+    # Set the environment variables using the outputs
     azd env set RS_STORAGE_ACCOUNT "$RS_STORAGE_ACCOUNT"
     azd env set RS_CONTAINER_NAME "$RS_CONTAINER_NAME"
     azd env set RS_RESOURCE_GROUP "$RS_RESOURCE_GROUP"
-fi
 
+    # Set FORCE_TERRAFORM_REMOTE_STATE_CREATION to false at the end of the block
+    azd env set FORCE_TERRAFORM_REMOTE_STATE_CREATION "false"
+fi
 
 # Configure the TF workspace for GH Action runs
 TF_WORKSPACE_DIR="${GITHUB_WORKSPACE:+$GITHUB_WORKSPACE/}.azure/${AZURE_ENV_NAME}/infra/.terraform"

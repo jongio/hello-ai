@@ -2,21 +2,17 @@ output "AZURE_OPENAI_ENDPOINT" {
   value = azurerm_cognitive_account.cog.endpoint
 }
 
-output "AZURE_OPENAI_IDENTITY_ID" {
-  value = azurerm_user_assigned_identity.uai.client_id
-}
-
 output "AZURE_OPENAI_API_KEY" {
   value     = azurerm_cognitive_account.cog.primary_access_key
   sensitive = true
 }
 
 output "AZURE_OPENAI_API_VERSION" {
-  value     = "2023-07-01-preview"
+  value = "2023-07-01-preview"
 }
 
 output "AZURE_OPENAI_DEPLOYMENT_NAME" {
-  value     = "gpt-35-turbo"
+  value = "gpt-35-turbo"
 }
 
 output "AZURE_OPENAI_MODEL_NAME" {
@@ -28,7 +24,7 @@ output "AZURE_OPENAI_MODEL_VERSION" {
 }
 
 output "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME" {
-  value     = "text-embedding-ada-002"
+  value = "text-embedding-ada-002"
 }
 
 output "AZURE_OPENAI_EMBEDDINGS_MODEL_NAME" {

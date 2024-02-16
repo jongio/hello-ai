@@ -37,6 +37,5 @@ if [[ -z "${AZURE_SUBSCRIPTION_ID:-}" ]]; then
             ;;
     esac
 else
-    echo "Found AZURE_SUBSCRIPTION_ID environment variable. Setting active subscription to: $AZURE_SUBSCRIPTION_ID"
     az account set -s $AZURE_SUBSCRIPTION_ID
 fi
