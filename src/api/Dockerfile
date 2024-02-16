@@ -17,8 +17,8 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY ./api /code/api
 
 # Conditionally install debugpy if DEBUG_MODE is set to 1
-ARG DEBUG_MODE
-RUN if [ "$DEBUG_MODE" = "1" ]; then pip install debugpy; fi
+
+RUN pip install debugpy
 
 # Command to run the application
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "3100", "--proxy-headers"]
