@@ -22,6 +22,11 @@ hooks:
     continueOnError: false
     interactive: true
     run: infra/hooks/preprovision.sh
+  prepackage:
+    shell: sh
+    continueOnError: false
+    interactive: true
+    run: infra/hooks/prepackage.sh
   postprovision:
     shell: sh
     continueOnError: false
