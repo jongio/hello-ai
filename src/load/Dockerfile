@@ -4,11 +4,13 @@ FROM python:3.11-slim
 # Set the working directory in the container
 WORKDIR /code
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . .
+# First copy only the requirements file and install dependencies
+COPY ./load/requirements.txt /code/load/
+RUN pip install -r /code/load/requirements.txt
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Then copy the rest of the code
+COPY ./load /code/load
+COPY ./common /code/common
 
 # Run load.py when the container launches
-CMD ["python", "load.py"]
+CMD ["python", "-m", "load.load.load"]

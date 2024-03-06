@@ -1,14 +1,11 @@
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
 import os
 from fastapi import FastAPI, Request, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 from pydantic import BaseModel
-from langchain_community.vectorstores import Chroma
+from common.vectordb.factory import get_vectordb
 from langchain_openai import AzureOpenAIEmbeddings
+from common.utils.utils import is_inside_container
 
 load_dotenv()
 
@@ -21,11 +18,13 @@ client = AzureOpenAI(
 )
 
 system_prompt = "Using only the provided embeddings (E) from the vectordb, find the most relevant answer to the user question (Q). Do not use external knowledge. You will receive data in this format: 'E:{content}\nQ:{question}'"
-embeddings = AzureOpenAIEmbeddings(
+embedding = AzureOpenAIEmbeddings(
                 azure_deployment=os.getenv('AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME'),
                 openai_api_version=os.getenv('AZURE_OPENAI_API_VERSION'),
             )
-vectordb = Chroma(persist_directory="/.data", embedding_function=embeddings)
+
+persist_directory = "/.data" if is_inside_container() else "../.data"
+vectordb = get_vectordb(embedding=embedding, persist_directory=persist_directory)
 
 app = FastAPI()
 
