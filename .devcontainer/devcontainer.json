@@ -38,5 +38,8 @@
 	"forwardPorts": [
 		3000,
 		3100
-	]
+	],
+	"containerEnv": {
+		"AZD_SKIP_UPDATE_CHECK": "true"
+	}
 }

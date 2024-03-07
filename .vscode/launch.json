@@ -32,6 +32,27 @@
                 "command": "export DEBUG_MODE=1 && docker-compose up --build"
             }
         },
+        
+        {
+            "name": "Docker: Compose Up Load (Debug)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "export DEBUG_MODE=1 && export FORCE_LOAD=true && docker-compose up load --build",
+            "cwd": "${workspaceFolder}",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "windows": {
+                "command": "cmd /C \"set DEBUG_MODE=1 && export FORCE_LOAD=true && docker-compose up load --build\""
+            },
+            "linux": {
+                "command": "export DEBUG_MODE=1 && export FORCE_LOAD=true && docker-compose up load --build"
+            },
+            "osx": {
+                "command": "export DEBUG_MODE=1 && export FORCE_LOAD=true && docker-compose up load --build"
+            }
+        },
         {
             "name": "Docker: Attach to API",
             "type": "debugpy",
@@ -43,7 +64,23 @@
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/src/api",
-                    "remoteRoot": "/code"
+                    "remoteRoot": "/code/api"
+                }
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "Docker: Attach to Load",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5679  // This should match the new port used for debugpy in the load service
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/src/load",  // Adjust if necessary to match your directory structure
+                    "remoteRoot": "/code/load"  // Adjust to match the working directory inside the Docker container
                 }
             ],
             "justMyCode": true

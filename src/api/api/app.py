@@ -54,7 +54,7 @@ class ChatRequest(BaseModel):
 async def chat(request: ChatRequest):
     try:
         if request.search_documents:
-            docs = vectordb.similarity_search(request.message, k=3)
+            docs = vectordb.search(request.message, k=3)
             messages = [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"E:{docs}\nQ:{request.message}"}

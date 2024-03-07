@@ -11,14 +11,19 @@ services:
       - ./files:/files
     environment:
       - PYTHONUNBUFFERED=1
-      - FORCE_LOAD=${FORCE_LOAD:-false}  # Add this line
+      - DEBUG_WAIT_TIME=30  # Waits for 30 seconds before starting execution
+      - FORCE_LOAD=${FORCE_LOAD:-false}
+      - DEBUG_MODE=${DEBUG_MODE:-0}  # Add this line for load service as well
+    command: /bin/sh -c "[ '${DEBUG_MODE:-0}' = '1' ] && exec python -m debugpy --listen 0.0.0.0:5679 --wait-for-client -m load.load.load || exec python -m load.load.load"  # Adjust for debug mode
+    ports:
+      - "5679:5679"  # debugpy port for load service, different from the one used by API
   api:
     build:
       context: ./src
       dockerfile: api/Dockerfile
     ports:
       - "3100:3100"
-      - "5678:5678"  # debugpy port
+      - "5678:5678"  # debugpy port for API
     env_file: 
       - .env
     command: /bin/sh -c "[ '${DEBUG_MODE:-0}' = '1' ] && exec python -m debugpy --listen 0.0.0.0:5678 --wait-for-client -m uvicorn api.api.app:app --host 0.0.0.0 --port 3100 --proxy-headers || exec uvicorn api.api.app:app --host 0.0.0.0 --port 3100 --proxy-headers"

@@ -60,3 +60,9 @@ variable "k8s_namespace" {
   type        = string
   default     = "default"
 }
+
+variable "search_index_name" {
+  description = "value of search index name"
+  type        = string
+  default     = "docs"
+}

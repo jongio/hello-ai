@@ -2,10 +2,12 @@
 
 import os
 from .chroma import ChromaDB
+from .azure_search import AzureSearchDB  # Assuming azure_search.py is the filename
+
 from langchain_openai import AzureOpenAIEmbeddings  # Assuming you're using this for embeddings
 
-def get_vectordb(embedding=None, documents=None, persist_directory="/.data"):
-    vectordb_type = os.getenv('VECTORDB_TYPE', 'chroma').lower()
+def get_vectordb(embedding=None, persist_directory="/.data"):
+    vectordb_type = os.getenv('VECTORDB_TYPE', 'azure_search').lower()
     
     if embedding is None:
         # Initialize your default embeddings here, if necessary
@@ -15,9 +17,13 @@ def get_vectordb(embedding=None, documents=None, persist_directory="/.data"):
         )
 
     if vectordb_type == 'chroma':
-        if documents:
-            return ChromaDB.from_documents(documents=documents, embedding=embedding, persist_directory=persist_directory)
-        else:
-            return ChromaDB(embedding=embedding, persist_directory=persist_directory)
+        return ChromaDB(embedding=embedding, persist_directory=persist_directory)
+    elif vectordb_type == 'azure_search':
+        # Add your Azure Search specific parameters here
+        return AzureSearchDB(
+            service_name=os.getenv('AZURE_SEARCH_SERVICE_NAME'),
+            index_name=os.getenv('AZURE_SEARCH_INDEX_NAME'),
+            api_key=os.getenv('AZURE_SEARCH_API_KEY')
+        )
     else:
         raise ValueError(f"Unsupported vector database type: {vectordb_type}")

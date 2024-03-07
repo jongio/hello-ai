@@ -8,3 +8,6 @@ langchain_openai
 chromadb 
 bs4
 pysqlite3-binary
+azure-core
+azure-search-documents
+debugpy>=1.0.0

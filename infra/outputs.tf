@@ -70,3 +70,16 @@ output "AZURE_RESOURCE_GROUP" {
 output "AZURE_TENANT_ID" {
   value = data.azurerm_client_config.current.tenant_id
 }
+
+output "AZURE_SEARCH_SERVICE_NAME" {
+  value = azurerm_search_service.search.name
+}
+
+output "AZURE_SEARCH_INDEX_NAME" {
+  value = var.search_index_name
+}
+
+output "AZURE_SEARCH_API_KEY" {
+  value     = azurerm_search_service.search.primary_key
+  sensitive = true
+}
