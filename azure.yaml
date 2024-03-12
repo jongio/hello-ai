@@ -3,6 +3,11 @@
 name: hello-ai
 metadata:
   template: hello-ai@0.0.1-beta
+workflows:
+  up: 
+    - azd: provision
+    - azd: package
+    - azd: deploy
 services:
   api:
     project: ./src/api
@@ -10,12 +15,18 @@ services:
     host: aks
     k8s:
       deploymentPath: ../../infra/manifests/api
+    docker:
+      context: ..
+      path: api/Dockerfile
   web:
     project: ./src/web
     language: python
     host: aks
     k8s:
       deploymentPath: ../../infra/manifests/web
+    docker:
+      context: ..
+      path: web/Dockerfile
 hooks:
   preprovision:
     shell: sh
