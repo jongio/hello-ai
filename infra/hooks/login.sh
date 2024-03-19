@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# AZD LOGIN
+
+# Check if the user is logged in to Azure
+login_status=$(azd auth login --check-status)
+
+# Check if the user is not logged in
+if [[ "$login_status" == *"Not logged in"* ]]; then
+  echo "Not logged in, initiating login process..."
+  # Command to log in to Azure
+  azd auth login
+fi
+
+# AZ LOGIN
 EXPIRED_TOKEN=$(az ad signed-in-user show --query 'id' -o tsv 2>/dev/null || true)
 
 if [[ -z "$EXPIRED_TOKEN" ]]; then

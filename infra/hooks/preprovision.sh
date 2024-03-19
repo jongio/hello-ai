@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DIR=$(dirname "$(realpath "$0")")
+"$DIR/login.sh"
+
 # Convert WORKSPACE to lowercase and trim any whitespace
 WORKSPACE=$(echo "${WORKSPACE:-default}" | tr '[:upper:]' '[:lower:]' | xargs)
 

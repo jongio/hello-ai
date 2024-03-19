@@ -8,7 +8,7 @@ services:
       - .env
     volumes:
       - ./.data:/.data
-      - ./files:/files
+      - ./src/files:/files
     environment:
       - PYTHONUNBUFFERED=1
       - DEBUG_WAIT_TIME=30  # Waits for 30 seconds before starting execution

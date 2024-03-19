@@ -71,8 +71,8 @@ output "AZURE_TENANT_ID" {
   value = data.azurerm_client_config.current.tenant_id
 }
 
-output "AZURE_SEARCH_SERVICE_NAME" {
-  value = azurerm_search_service.search.name
+output "AZURE_SEARCH_ENDPOINT" {
+  value = "https://${azurerm_search_service.search.name}.search.windows.net"
 }
 
 output "AZURE_SEARCH_INDEX_NAME" {
@@ -82,4 +82,8 @@ output "AZURE_SEARCH_INDEX_NAME" {
 output "AZURE_SEARCH_API_KEY" {
   value     = azurerm_search_service.search.primary_key
   sensitive = true
+}
+
+output "VECTORDB_TYPE" {
+  value = var.vectordb_type
 }

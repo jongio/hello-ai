@@ -1,4 +1,4 @@
-# Use a specific, slim variant of the Python 3.10 image for smaller image size
+# Use a specific, slim variant of the Python 3.11 image for smaller image size
 FROM python:3.11-slim
 
 # Set the working directory in the container
@@ -23,4 +23,4 @@ ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=3000
 
 # Command to run the application
-CMD ["flask", "run"]
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=3000"]

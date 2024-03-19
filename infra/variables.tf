@@ -52,7 +52,7 @@ variable "openai_embeddings_model_version" {
 variable "openai_embeddings_model_capacity" {
   description = "value of azure openai embeddings model capacity"
   type        = number
-  default     = 30
+  default     = 50
 }
 
 variable "k8s_namespace" {
@@ -65,4 +65,10 @@ variable "search_index_name" {
   description = "value of search index name"
   type        = string
   default     = "docs"
+}
+
+variable "vectordb_type" {
+  description = "value of vectordb type"
+  type        = string
+  default     = "azure_search"
 }
