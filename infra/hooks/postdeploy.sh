@@ -25,6 +25,7 @@ if [ "$WORKSPACE" = "azure" ]; then
         # Check the response
         if [[ "$response" =~ ^[Yy]$ ]]; then
             echo "Configuring GitHub Action..."
+            azd auth login --scope https://graph.microsoft.com/.default
             azd pipeline config
             # Set AZD_GH_ACTION_PROMPT to false
             azd env set AZD_PIPELINE_CONFIG_PROMPT false

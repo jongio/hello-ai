@@ -1,7 +1,10 @@
 #!/bin/bash
 
-DIR=$(dirname "$(realpath "$0")")
-"$DIR/login.sh"
+if [ -z "$GITHUB_WORKSPACE" ]; then
+    # The GITHUB_WORKSPACE is not set, meaning this is not running in a GitHub Action
+    DIR=$(dirname "$(realpath "$0")")
+    "$DIR/login.sh"
+fi
 
 # Convert WORKSPACE to lowercase and trim any whitespace
 WORKSPACE=$(echo "${WORKSPACE:-default}" | tr '[:upper:]' '[:lower:]' | xargs)
