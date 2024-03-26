@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: api-config
+  name: load-config
 data:
   AZURE_AKS_IDENTITY_CLIENT_ID: {{.Env.AZURE_AKS_IDENTITY_CLIENT_ID}}
   AZURE_OPENAI_ENDPOINT: {{.Env.AZURE_OPENAI_ENDPOINT}}

@@ -1,5 +1,5 @@
-# Use a specific, slim variant of the Python 3.10 image for smaller image size
-FROM python:3.10-slim
+# Use a specific, slim variant of the Python 3.11 image for smaller image size
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /code
@@ -14,13 +14,13 @@ COPY ./requirements.txt /code/
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy the rest of the application code
-COPY ./quote /code/quote
+COPY ./web /code/web
 
 # Set environment variables
 # Flask runs in production mode by default. Use development if you need debug features.
-ENV FLASK_APP=quote/app.py
+ENV FLASK_APP=web/app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=3000
 
 # Command to run the application
-CMD ["flask", "run"]
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=3000"]

@@ -2,23 +2,17 @@ output "AZURE_OPENAI_ENDPOINT" {
   value = azurerm_cognitive_account.cog.endpoint
 }
 
-output "AZURE_OPENAI_IDENTITY_ID" {
-  value = azurerm_user_assigned_identity.uai.client_id
-}
-
 output "AZURE_OPENAI_API_KEY" {
   value     = azurerm_cognitive_account.cog.primary_access_key
   sensitive = true
 }
 
 output "AZURE_OPENAI_API_VERSION" {
-  value     = "2023-07-01-preview"
-  sensitive = true
+  value = "2023-07-01-preview"
 }
 
 output "AZURE_OPENAI_DEPLOYMENT_NAME" {
-  value     = "gpt-35-turbo"
-  sensitive = true
+  value = "gpt-35-turbo"
 }
 
 output "AZURE_OPENAI_MODEL_NAME" {
@@ -27,6 +21,18 @@ output "AZURE_OPENAI_MODEL_NAME" {
 
 output "AZURE_OPENAI_MODEL_VERSION" {
   value = "0613"
+}
+
+output "AZURE_OPENAI_EMBEDDINGS_DEPLOYMENT_NAME" {
+  value = "text-embedding-ada-002"
+}
+
+output "AZURE_OPENAI_EMBEDDINGS_MODEL_NAME" {
+  value = var.openai_embeddings_model_name
+}
+
+output "AZURE_OPENAI_EMBEDDINGS_MODEL_VERSION" {
+  value = "2"
 }
 
 output "AZURE_OPENAI_NAME" {
@@ -63,4 +69,21 @@ output "AZURE_RESOURCE_GROUP" {
 
 output "AZURE_TENANT_ID" {
   value = data.azurerm_client_config.current.tenant_id
+}
+
+output "AZURE_SEARCH_ENDPOINT" {
+  value = "https://${azurerm_search_service.search.name}.search.windows.net"
+}
+
+output "AZURE_SEARCH_INDEX_NAME" {
+  value = var.search_index_name
+}
+
+output "AZURE_SEARCH_API_KEY" {
+  value     = azurerm_search_service.search.primary_key
+  sensitive = true
+}
+
+output "VECTORDB_TYPE" {
+  value = var.vectordb_type
 }
