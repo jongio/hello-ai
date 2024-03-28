@@ -17,7 +17,7 @@ variable "location" {
 variable "openai_api_version" {
   description = "Specifies the version of the OpenAI API."
   type        = string
-  default     = "2023-07-01-preview"
+  default     = "2024-03-01-preview"
 }
 
 variable "openai_deployment_name" {

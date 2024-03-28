@@ -8,6 +8,9 @@ import logging
 import sys
 import time 
 
+# Define a constant for the completion marker path
+LOAD_COMPLETION_MARKER_PATH = "/files/load_completion_marker.txt"
+
 def init_logging():
     """Initializes logging."""
     logging.basicConfig(
@@ -30,7 +33,7 @@ def split_documents(docs):
     """Splits documents into smaller chunks."""
     logging.info("Splitting documents into chunks...")
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1500, chunk_overlap=500, separators=["\n\n", "\n", " ", ""]
+        chunk_size=1500, chunk_overlap=150, separators=["\n\n", "\n", " ", ""]
     )
     chunks = splitter.split_documents(docs)
     logging.info(f"Split into {len(chunks)} chunks.")
@@ -47,6 +50,10 @@ def index_documents(chunks):
         vectordb = get_vectordb(embedding=embedding, persist_directory="/.data")
         vectordb.index_documents(documents=chunks)
         logging.info("Embeddings generated and stored.")
+
+        # Create the completion marker file using the constant
+        with open(LOAD_COMPLETION_MARKER_PATH, "w") as f:
+            f.write("Loading operation completed successfully.")
     except Exception as e:
         logging.error(f"Failed to generate embeddings: {e}")
         raise
@@ -57,20 +64,27 @@ def main():
     try:
         load_dotenv()
 
-        debug_mode = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
-        debug_wait_time = int(os.getenv('DEBUG_WAIT_TIME', '0'))
+        force_load = os.getenv("FORCE_LOAD", "").lower() == "true"
 
-        if debug_mode:
-            logging.info(f"Debug mode is enabled. Waiting {debug_wait_time} seconds for debugger to attach...")
-            time.sleep(debug_wait_time)
+        # Check if force_load is true or the completion marker file does not exist
+        if force_load or not os.path.exists(LOAD_COMPLETION_MARKER_PATH):
+            debug_mode = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
+            debug_wait_time = int(os.getenv('DEBUG_WAIT_TIME', '0'))
 
-        docs = load_documents()
-        chunks = split_documents(docs)
-        index_documents(chunks)
-        logging.info("Load script completed successfully.")
+            if debug_mode:
+                logging.info(f"Debug mode is enabled. Waiting {debug_wait_time} seconds for debugger to attach...")
+                time.sleep(debug_wait_time)
+
+            docs = load_documents()
+            chunks = split_documents(docs)
+            index_documents(chunks)
+            logging.info("Load script completed successfully.")
+        else:
+            logging.info("Loading operation already completed. To force reload, set 'FORCE_LOAD=true'.")
     except Exception as e:
         logging.error(f"Script execution failed: {e}")
         raise
+
 
 if __name__ == "__main__":
     main()

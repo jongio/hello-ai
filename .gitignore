@@ -170,3 +170,4 @@ kustomize
 *.tfstate.backup
 *_env
 *.data
+load_completion_marker.txt
