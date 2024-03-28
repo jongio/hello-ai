@@ -10,7 +10,7 @@ resource "azurerm_cognitive_account" "cog" {
   location              = var.location
   resource_group_name   = azurerm_resource_group.rg.name
   kind                  = "OpenAI"
-  sku_name              = "S0"
+  sku_name              = var.openai_sku_name
   custom_subdomain_name = azurecaf_name.cog_name.result
   tags                  = azurerm_resource_group.rg.tags
 }

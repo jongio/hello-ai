@@ -85,9 +85,9 @@ class AzureSearchDB(VectorDB):
             )
 
             results = self.search_client.search(
-                search_text=None, vector_queries=[vector_query], select=["content"]
+                search_text=None, vector_queries=[vector_query], select=["content"], include_total_count=True
             )
-            logging.info(f"Search completed, found {len(results)} results")
+            logging.info(f"Search completed, found {results.get_count()} results")
             return [result for result in results]
         except Exception as e:
             logging.error(f"Search failed for query: {query}, error: {e}")

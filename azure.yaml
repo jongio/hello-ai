@@ -42,5 +42,10 @@ hooks:
     continueOnError: false
     interactive: true
     run: infra/hooks/postdeploy.sh
+  predown:
+    shell: sh
+    continueOnError: false
+    interactive: true
+    run: infra/hooks/predown.sh
 infra:
   provider: terraform
