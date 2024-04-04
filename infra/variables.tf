@@ -113,5 +113,5 @@ variable "vectordb_type" {
 variable "workspace" {
   description = "Specifies the value of the workspace."
   type        = string
-  default     = "dev"
+  default     = "default"
 }
