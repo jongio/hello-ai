@@ -42,6 +42,11 @@ hooks:
     continueOnError: false
     interactive: true
     run: infra/hooks/postdeploy.sh
+  preup:
+    shell: sh
+    continueOnError: false
+    interactive: true
+    run: infra/hooks/preup.sh
   predown:
     shell: sh
     continueOnError: false

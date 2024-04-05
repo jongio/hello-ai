@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 # Check if the script is running in a Codespace Browser and ask user to open in VS Code Desktop if it is
 # Initialize IS_BROWSER variable to false
 IS_BROWSER=false
