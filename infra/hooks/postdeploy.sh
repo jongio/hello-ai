@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Convert WORKSPACE to lowercase and trim any whitespace
-WORKSPACE=$(echo "${WORKSPACE}" | tr '[:upper:]' '[:lower:]' | xargs)
+WORKSPACE=${WORKSPACE:-"azure"} # Set default value if not set
+WORKSPACE=$(echo "${WORKSPACE}" | tr '[:upper:]' '[:lower:]' | xargs) # Convert to lowercase and trim whitespace
 
 # Check if WORKSPACE is set to "azure"
-if [ "$WORKSPACE" = "azure" ]; then
+if [ -z "$GITHUB_WORKSPACE" ] && [ "$WORKSPACE" = "azure" ]; then
     # Add a delay to ensure that the service is up and running
     echo "Waiting for the service to be available..."
     sleep 30

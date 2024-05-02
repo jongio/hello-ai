@@ -7,10 +7,11 @@ if [ -z "$GITHUB_WORKSPACE" ]; then
 fi
 
 # Convert WORKSPACE to lowercase and trim any whitespace
-WORKSPACE=$(echo "${WORKSPACE:-default}" | tr '[:upper:]' '[:lower:]' | xargs)
+WORKSPACE=${WORKSPACE:-"azure"} # Set default value if not set
+WORKSPACE=$(echo "${WORKSPACE}" | tr '[:upper:]' '[:lower:]' | xargs) # Convert to lowercase and trim whitespace
 
 # Continue with the rest of the script based on WORKSPACE value and FORCE_TERRAFORM_REMOTE_STATE_CREATION condition
-if [ "$WORKSPACE" = "default" ] && { [ -z "$FORCE_TERRAFORM_REMOTE_STATE_CREATION" ] || [ "$FORCE_TERRAFORM_REMOTE_STATE_CREATION" = "true" ]; }; then
+if [ -z "$GITHUB_WORKSPACE" ] && { [ -z "$FORCE_TERRAFORM_REMOTE_STATE_CREATION" ] || [ "$FORCE_TERRAFORM_REMOTE_STATE_CREATION" = "true" ]; }; then
     # Define the file path
     TF_DIR="infra/tfstate"
     
@@ -50,4 +51,3 @@ mkdir -p "$TF_WORKSPACE_DIR"
 
 # Use the variable with the terraform command
 terraform -chdir="$TF_WORKSPACE_DIR" workspace select -or-create "$WORKSPACE"
-
